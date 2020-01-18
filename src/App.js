@@ -1,26 +1,46 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { Table, Container, Jumbotron } from 'reactstrap';
 
-function App() {
+import PrimeNumbers from './Helper/PrimeNumbers'
+
+const App = () => {
+
+  let primeNumbers = PrimeNumbers();
+
+  const TableData = (i, j) => {
+    if (i === 0 && j === 0) {
+      return <td>x</td>;
+    } else if (i === 0 && j > 0) {
+      return <td> <strong>{primeNumbers[j - 1]}</strong> </td>;
+    } else if (j === 0 && i > 0) {
+      return <td> <strong>{primeNumbers[i - 1]}</strong> </td>;
+    } else if (i > 0 && j > 0) {
+      return <td> {+primeNumbers[i - 1] * +primeNumbers[j - 1]} </td>;
+    }
+  }
+
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <Jumbotron>
+        <h1 style={{ textAlign: 'center' }}>Prime Numbers Multiplication Table</h1>
+      </Jumbotron>
+      <Table striped>
+        <tbody>
+          {primeNumbers.map((pr, i) => {
+            return (
+              <tr key={i}>
+                {primeNumbers.map((pc, j) => {
+                  return TableData(i, j);
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
+      </Table>
+    </Container>
   );
 }
-
 export default App;
